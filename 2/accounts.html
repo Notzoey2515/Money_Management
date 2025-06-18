@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Tracker</title>
+    <link rel="stylesheet" href="accounts.css"> 
+      <link rel="icon" href="icon.ico" type="image/x-icon" />
+
+
+  <link rel="manifest" href="/manifest.json">
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" href="/icon.png">
+  <!-- Enable standalone full-screen mode on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Set the app title when added to home screen -->
+  <meta name="apple-mobile-web-app-title" content="MyAppName">
+  <!-- Set status bar color -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Hamburger Menu Icon -->
+    <div class="hamburger" onclick="toggleSidebar()">☰</div>
+
+    <!-- Sidebar Section -->
+    <div class="sidebar" id="sidebar">
+        <h2>BODZ</h2>
+        <ul class="nav" id="nav-menu">
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="record.html">Records</a></li>
+            <li><a href="reports.html">Charts</a></li>
+            <li><a href="accounts.html" class="active">Accounts</a></li> <!-- Active Link -->
+            <li><a href="anal.html">Analysis</a></li>
+            <li><a href="me.html">Me</a></li>
+            
+        </ul>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="content">
+        <header>
+            <h1 style="font-size: 32px; margin-bottom: 20px; color: #ffffff; text-align: center; 
+            border-bottom: 2px solid #2d2d2d; display: inline-block; padding-bottom: 10px;">Manage Your Accounts</h1>
+
+
+
+        </header>
+
+        <!-- Account List Section -->
+        <section class="account-list">
+            <h3>Your Accounts</h3>
+            <ul id="account-list">
+                <!-- Accounts will be dynamically listed here -->
+            </ul>
+        </section>
+
+        <!-- Account Form Section -->
+        <section class="account-form">
+            <input type="text" id="account-name" placeholder="Account Name" />
+            <button id="add-account-btn">Add Account</button>
+        </section>
+    </div>
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+       
+        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, and Ctrl+U
+        document.addEventListener('keydown', function (e) {
+            if (
+                e.key === 'F12' || // F12 key
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || // Ctrl+Shift+I or Ctrl+Shift+J
+                (e.ctrlKey && e.key === 'U') // Ctrl+U
+            ) {
+                e.preventDefault();
+                alert("Developer tools detected! Closing the page.");
+                redirectToBlank();
+            }
+        });
+
+        // Function to redirect to blank page and prevent going back
+        function redirectToBlank() {
+            window.location.replace("about:blank"); // Replace current history entry
+        }
+
+        (function detectDevTools() {
+            let devtoolsOpen = false;
+
+            // Detect using window.outerWidth and window.outerHeight
+            function checkWindowSize() {
+                const threshold = 160; // Height difference when DevTools are open
+                if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+                    devtoolsOpen = true;
+                }
+            }
+
+            // Detect using console.log behavior
+            function checkConsoleBehavior() {
+                const element = new Image();
+                Object.defineProperty(element, 'id', {
+                    get: function () {
+                        devtoolsOpen = true;
+                        // Trigger action immediately
+                        alert("Developer tools detected! Closing the page.");
+                        redirectToBlank();
+                    }
+                });
+                console.log(element);
+            }
+
+            // Monitor for Developer Tools
+            function monitorDevTools() {
+                devtoolsOpen = false;
+                checkWindowSize();
+
+                if (devtoolsOpen) {
+                    alert("Developer tools detected! Closing the page.");
+                    redirectToBlank(); // Redirect to blank page
+                } else {
+                    checkConsoleBehavior();
+                }
+            }
+
+            // Run detection every 100ms for faster response
+            setInterval(monitorDevTools, 100);
+        })();
+    </script>
+    <!-- Link to JavaScript -->
+    <script src="accounts.js"></script> 
+</body>
+</html>
